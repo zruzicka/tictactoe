@@ -22,7 +22,11 @@
       	height: 200px;
       	width: 200px;
       	border: 5px solid black;
+      	display: flex;
+      	font-size: 5em;
       	box-sizing: border-box;
+      	justify-content: center;
+      	align-items: center;
       }
       .square:hover {
       	background-color: #82cd92;
@@ -44,5 +48,16 @@
   		<div class="square">.</div>
   		<div class="square">.</div>
   	</div>
+  	<script type="text/javascript">
+  		var PLAYER_ONE_SYMBOL = 'X';
+  		var PLAYER_TWO_SYMBOL = '0';
+  		var currentTurn;
+
+  		var board = document.querySelector('.board');
+  		board.addEventListener("click", function(e) {
+  			currentTurn = currentTurn === PLAYER_ONE_SYMBOL ? PLAYER_TWO_SYMBOL : PLAYER_ONE_SYMBOL;
+  			e.target.innerHTML = currentTurn;
+  		});
+  	</script>
   </body>
 </html>
