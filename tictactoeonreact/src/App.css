@@ -22,3 +22,26 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.board {
+  height: 600px;
+  width: 600px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.square {
+  height: 200px;
+  width: 200px;
+  border: 5px solid black;
+  display: flex;
+  font-size: 5em;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+}
+.square:hover {
+  cursor: pointer;
+  background-color: #82cd92;
+}

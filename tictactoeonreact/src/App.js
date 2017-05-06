@@ -7,23 +7,36 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message : "Hello there!"
+      message : "TicTacToe!",
+      PLAYER_ONE_SYMBOL : 'X',
+      PLAYER_TWO_SYMBOL : '0',
+      currentTurn : '',
+      winningCombos : [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]],
+      board : ["", "", "", "", "", "", "", "", ""]
     }
+  }
+
+  handleClick(index) {
+    this.state.currentTurn = this.state.currentTurn === this.state.PLAYER_ONE_SYMBOL ? this.state.PLAYER_TWO_SYMBOL : this.state.PLAYER_ONE_SYMBOL;
+    this.state.board[index] = this.state.currentTurn;
+    this.setState({
+      currentTurn : this.state.currentTurn,
+    });
+    console.log(index);
   }
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2 onClick={()=> this.setState({message:this.state.message+"!"})}>{this.state.message}</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className='board'>
+      {this.state.board.map((cell, index) => {
+        return <div onClick={() => this.handleClick(index)} className="square">{cell}</div>;
+      })}
       </div>
-    );
+    )
+
   }
 }
 
-export default App;
+
+  export default App;
+
