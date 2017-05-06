@@ -1,95 +1,109 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Tit-Tac-Toe board</title>
-    <style> 
-      body {
-        color:#ffffff;
-        margin:10px;
-        font-size:150%;
-        background-color: #42af1c;
-      }
-      .board {
-      	height: 600px;
-      	width: 600px;
-      	display: flex;
-      	flex-direction: row;
-      	flex-wrap: wrap;
-      	justify-content: flex-start;
-      }
-      .square {
-      	height: 200px;
-      	width: 200px;
-      	border: 5px solid black;
-      	display: flex;
-      	font-size: 5em;
-      	box-sizing: border-box;
-      	justify-content: center;
-      	align-items: center;
-      }
-      .square:hover {
-      	background-color: #82cd92;
-      }
-    </style>
-    <script type="text/javascript">
-    	var counter = 0;
-    </script>
-  </head>
-  <body>
-  	<h1>Board</h1>
-  	<div class="board">
-  		<div class="square"></div>
-  		<div class="square"></div>
-  		<div class="square"></div>
+<head>
+	<meta charset="UTF-8">
+	<title>Tit-Tac-Toe board</title>
+	<style> 
+		body {
+			color:#ffffff;
+			margin:10px;
+			font-size:150%;
+			background-color: #42af1c;
+		}
+		.board {
+			height: 600px;
+			width: 600px;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+		}
+		.square {
+			height: 200px;
+			width: 200px;
+			border: 5px solid black;
+			display: flex;
+			font-size: 5em;
+			box-sizing: border-box;
+			justify-content: center;
+			align-items: center;
+		}
+		.square:hover {
+			background-color: #82cd92;
+		}
+	</style>
+	<script type="text/javascript">
+		var counter = 0;
+	</script>
+</head>
+<body>
+	<h1>Board</h1>
+	<div class="target"></div>
 
-  		<div class="square"></div>
-  		<div class="square"></div>
-  		<div class="square"></div>
+	<script type="text/javascript">
+		var gameState = {
+			PLAYER_ONE_SYMBOL : 'X',
+			PLAYER_TWO_SYMBOL : '0',
+			currentTurn : '',
+			winningCombos : [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]],
+			board : ["", "", "", "", "", "", "", "", ""]
+		}
 
-  		<div class="square"></div>
-  		<div class="square"></div>
-  		<div class="square"></div>
-  	</div>
-  	<script type="text/javascript">
-  		var PLAYER_ONE_SYMBOL = 'X';
-  		var PLAYER_TWO_SYMBOL = '0';
-  		var currentTurn;
-  		var winningCombos = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
+		function doTurn() {
+			gameState.currentTurn = gameState.currentTurn === gameState.PLAYER_ONE_SYMBOL ? gameState.PLAYER_TWO_SYMBOL : gameState.PLAYER_ONE_SYMBOL;
+		}
 
-  		var board = document.querySelector('.board');
-  		board.addEventListener("click", function(e) {
-  			currentTurn = currentTurn === PLAYER_ONE_SYMBOL ? PLAYER_TWO_SYMBOL : PLAYER_ONE_SYMBOL;
-  			e.target.innerHTML = currentTurn;
+		function render(state) {
+			document.querySelector('.target').innerHTML = "<div class='board'>"+
+			"<div class='square' data-square-id='0'>"+state.board[0]+"</div>"+
+			"<div class='square' data-square-id='1'>"+state.board[1]+"</div>"+
+			"<div class='square' data-square-id='2'>"+state.board[2]+"</div>"+
 
-  			counter += 1; 
-  			console.log("turn: " + counter);
+			"<div class='square' data-square-id='3'>"+state.board[3]+"</div>"+
+			"<div class='square' data-square-id='4'>"+state.board[4]+"</div>"+
+			"<div class='square' data-square-id='5'>"+state.board[5]+"</div>"+
 
-  			var squares = Array.prototype.slice.call(document.querySelectorAll(".square"), 0);
-  			var symbols = squares.map(function(square) {
-  				return square.innerHTML;
-  			})
-  			console.log("symbols: " + symbols);
+			"<div class='square' data-square-id='6'>"+state.board[6]+"</div>"+
+			"<div class='square' data-square-id='7'>"+state.board[7]+"</div>"+
+			"<div class='square' data-square-id='8'>"+state.board[8]+"</div>"+
+			"</div>";
 
-  			var winningCombo = checkForWinner(symbols);
-  			if (winningCombo) {
-  				console.log("(turn:"+counter+"; winningCombo:"+winningCombo+"; symbol:"+symbols[winningCombo[0]]+")");
-  				alert("Symbol '"+symbols[winningCombo[0]]+"' won!");
-  			}
-  		});
+			var board = document.querySelector('.board');
+			board.addEventListener("click", function(e) {
+				doTurn();
+				var sqareIndex = parseInt(e.target.dataset['squareId'], 10)
+				gameState.board[sqareIndex] = gameState.currentTurn;
 
-		/*
-		 * Returns winning combination.
-		 */
-  		function checkForWinner(symbols) {
-  			return winningCombos.find(function(combo) {
-  				if(symbols[combo[0]] == symbols[combo[1]] && symbols[combo[1]] == symbols[combo[2]]) {
-  					return symbols[combo[0]];
-  				} else {
-  					return false;
-  				}
-  			})
-  		}
-  	</script>
-  </body>
+				render(gameState);
+
+				counter += 1; 
+				console.log("turn: " + counter);
+
+				var symbols = gameState.board;
+				console.log("symbols: " + symbols);
+
+				var winningCombo = checkForWinner(symbols);
+				if (winningCombo) {
+					console.log("(turn:"+counter+"; winningCombo:"+winningCombo+"; symbol:"+symbols[winningCombo[0]]+")");
+					alert("Symbol '"+symbols[winningCombo[0]]+"' won!");
+				}
+			});
+
+		}
+
+		/* Returns winning combination. */
+		function checkForWinner(symbols) {
+			return gameState.winningCombos.find(function(combo) {
+				if(symbols[combo[0]] == symbols[combo[1]] && symbols[combo[1]] == symbols[combo[2]]) {
+					return symbols[combo[0]];
+				} else {
+					return false;
+				}
+			})
+		}
+
+		render(gameState);
+
+	</script>
+</body>
 </html>
