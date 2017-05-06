@@ -10,10 +10,39 @@
         font-size:150%;
         background-color: #42af1c;
       }
+      .board {
+      	height: 600px;
+      	width: 600px;
+      	display: flex;
+      	flex-direction: row;
+      	flex-wrap: wrap;
+      	justify-content: flex-start;
+      }
+      .square {
+      	height: 200px;
+      	width: 200px;
+      	border: 5px solid black;
+      	box-sizing: border-box;
+      }
+      .square:hover {
+      	background-color: #82cd92;
+      }
     </style>
   </head>
   <body>
   	<h1>Board</h1>
-  	<div>.</div>
+  	<div class="board">
+  		<div class="square">.</div>
+  		<div class="square">.</div>
+  		<div class="square">.</div>
+
+  		<div class="square">.</div>
+  		<div class="square">.</div>
+  		<div class="square">.</div>
+
+  		<div class="square">.</div>
+  		<div class="square">.</div>
+  		<div class="square">.</div>
+  	</div>
   </body>
 </html>
