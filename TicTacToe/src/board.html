@@ -32,6 +32,9 @@
       	background-color: #82cd92;
       }
     </style>
+    <script type="text/javascript">
+    	var counter = 0;
+    </script>
   </head>
   <body>
   	<h1>Board</h1>
@@ -57,7 +60,23 @@
   		board.addEventListener("click", function(e) {
   			currentTurn = currentTurn === PLAYER_ONE_SYMBOL ? PLAYER_TWO_SYMBOL : PLAYER_ONE_SYMBOL;
   			e.target.innerHTML = currentTurn;
+
+  			counter += 1; 
+  			console.log("turn: " + counter);
+
+  			if (checkForWinner()) {
+  				alert("Somebody won! (turn:"+counter+")");
+  			}
   		});
+
+  		function checkForWinner() {
+  			var squares = Array.prototype.slice.call(document.querySelectorAll(".square"), 0);
+  			var symbols = squares.map(function(square) {
+  				return square.innerHTML;
+  			})
+  			console.log("symbols: " + symbols);
+  			return false;
+  		}
   	</script>
   </body>
 </html>
