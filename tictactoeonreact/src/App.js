@@ -17,6 +17,9 @@ class App extends Component {
   }
 
   handleClick(index) {
+    if(this.state.board[index] != "") {
+        return; // No update needed.
+    }
     var currentTurn = this.state.currentTurn === this.state.PLAYER_ONE_SYMBOL ? this.state.PLAYER_TWO_SYMBOL : this.state.PLAYER_ONE_SYMBOL;
     var board = this.state.board;
     board[index] = currentTurn;
@@ -37,7 +40,7 @@ class App extends Component {
       <center>
       <div className='board'>
       {this.state.board.map((cell, index) => {
-        return <div onClick={() => this.handleClick(index)} className="square">{cell}</div>;
+        return <div onClick={() => this.handleClick(index)} className="square" key={index}>{cell}</div>;
       })}
       </div>
       </center>
